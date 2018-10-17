@@ -14,8 +14,10 @@ func EncodePassword(password string) string {
 }
 
 func main() {
-	fmt.Print("Enter text: ")
 	var password string
-	fmt.Scanln(&password)
-	fmt.Printf(EncodePassword(password))
+	for password != "q" {
+		fmt.Printf("Enter text or q to quit: ")
+		fmt.Scanln(&password)
+		fmt.Printf(EncodePassword(password))
+	}
 }
