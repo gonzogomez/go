@@ -4,8 +4,6 @@ import (
 		"fmt"
 		"encoding/base64"
 		"crypto/sha512"
-		"bufio"
-		"os"
 		)
 
 func EncodePassword(password string) string {
@@ -16,8 +14,8 @@ func EncodePassword(password string) string {
 }
 
 func main() {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Enter password: ")
-	password, _ := reader.ReadString('\n')
+	fmt.Print("Enter text: ")
+	var password string
+	fmt.Scanln(&password)
 	fmt.Printf(EncodePassword(password))
 }
