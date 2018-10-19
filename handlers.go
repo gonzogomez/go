@@ -51,6 +51,23 @@ func shutdown(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+func stats(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+    	case "GET":
+    		// Call ParseForm() to parse the raw query and update r.PostForm and r.Form.
+    		if err := r.ParseForm(); err != nil {
+    			log.Fatal(w, "ParseForm() err: %v", err)
+    			return
+    		}
+
+    		log.Printf("Getting stats...\n")
+    		encode_stats := GetStats()
+    		sendJson(w, http.StatusOK, encode_stats, 5)
+    	default:
+    		sendError(w, http.StatusBadRequest, "Only GET method is supported for this shutdown")		
+    }
+}
+
 func catchAll(w http.ResponseWriter, r *http.Request) {
 	sendError(w, http.StatusBadRequest, "URL is not supported")
 }
