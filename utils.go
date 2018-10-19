@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-
+var filepath = "./data.json"
 // EncodePassword takes in a string and provides the sha512 of it in encoded in base64.
 // Time to encode and password length is noted and written to a json file.
 func EncodePassword(password string) string {
@@ -28,9 +28,9 @@ func EncodePassword(password string) string {
 // If file is empty then {0,0} is returned.
 func GetStats() Stats {
 	// Check if file exists if not then there are no stats return {0,0}
-	if _, existserr := os.Stat("./data.json"); !os.IsNotExist(existserr) {
+	if _, existserr := os.Stat(filepath); !os.IsNotExist(existserr) {
 		var jsonArray []PasswordHash
-		jsonArray = LoadJSONFile("./data.json")// path/to/whatever exists
+		jsonArray = LoadJSONFile(filepath)// path/to/whatever exists
 		sum := 0
 
 		// Get sum
@@ -54,8 +54,8 @@ func GetStats() Stats {
 func WriteToFile(password_length int, encode_time int) {
 	var jsonArray []PasswordHash
 	// Load jsonArray if file exists
-	if _, existserr := os.Stat("./data.json"); !os.IsNotExist(existserr) {
-		jsonArray = LoadJSONFile("./data.json")// path/to/whatever exists
+	if _, existserr := os.Stat(filepath); !os.IsNotExist(existserr) {
+		jsonArray = LoadJSONFile(filepath)// path/to/whatever exists
 	}
 
 	// Add to json array
@@ -65,11 +65,11 @@ func WriteToFile(password_length int, encode_time int) {
 	// Encode json array
 	jdata1, err := json.MarshalIndent(jsonArray, "", "  ")
 	if err != nil {
-		log.Printf("error:", err)
+		log.Printf("error: %v", err)
 	}
 
 	// Write to file
-	jsonFile, err := os.Create("./data.json")
+	jsonFile, err := os.Create(filepath)
 	jsonFile.Write(jdata1)
 }
 

@@ -53,7 +53,7 @@ func shutdown(w http.ResponseWriter, r *http.Request) {
     		// Send interupt signal
     		syscall.Kill(syscall.Getpid(), syscall.SIGINT)
     	default:
-    		sendError(w, http.StatusBadRequest, "Only POST method is supported for this shutdown")		
+    		sendError(w, http.StatusBadRequest, "Only POST method is supported for shutdown")		
     }
 }
 
