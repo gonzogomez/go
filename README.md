@@ -62,7 +62,7 @@ Return Value
 ```
 
 ## Running the tests
-Tests issue all the different requests supported.  The tests all issue requests that should return an error.
+Tests issue all the different requests supported.  The tests also issue requests that should return an error.
 
 How to run tests:
 
