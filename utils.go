@@ -9,6 +9,9 @@ import (
 	"os"
 )
 
+
+// EncodePassword takes in a string and provides the sha512 of it in encoded in base64.
+// Time to encode and password length is noted and written to a json file.
 func EncodePassword(password string) string {
 	start := time.Now()
 	hash := sha512.New()
@@ -20,6 +23,9 @@ func EncodePassword(password string) string {
 	return sha512_hash
 }
 
+// GetStatus calculate average encode time of hashes and return total and average.
+// Reads from a json file to calculate average encode time from all hashes seen so far.
+// If file is empty then {0,0} is returned.
 func GetStats() Stats {
 	// Check if file exists if not then there are no stats return {0,0}
 	if _, existserr := os.Stat("./data.json"); !os.IsNotExist(existserr) {
@@ -42,26 +48,34 @@ func GetStats() Stats {
 	}
 }
 
+
+// Helper function to write password length and encode time to a json file.
+// WriteToFile checks if the json file exists, if so then appends to the json object.
 func WriteToFile(password_length int, encode_time int) {
 	var jsonArray []PasswordHash
+	// Load jsonArray if file exists
 	if _, existserr := os.Stat("./data.json"); !os.IsNotExist(existserr) {
 		jsonArray = LoadJSONFile("./data.json")// path/to/whatever exists
 	}
 
+	// Add to json array
 	passhash := PasswordHash{Length: password_length, Time: encode_time}
 	jsonArray = append(jsonArray, passhash)	
 
+	// Encode json array
 	jdata1, err := json.MarshalIndent(jsonArray, "", "  ")
 	if err != nil {
 		log.Printf("error:", err)
 	}
 
+	// Write to file
 	jsonFile, err := os.Create("./data.json")
 	jsonFile.Write(jdata1)
 }
 
+
+// Helper function to read json file and return an array of json objects of type PasswordHash.
 func LoadJSONFile(filename string) []PasswordHash {
-	// passhash :=PasswordHash{}
 	var jsonArray []PasswordHash
 	jsonFile, err := os.Open(filename)
 	defer jsonFile.Close()

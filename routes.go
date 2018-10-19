@@ -4,6 +4,7 @@ import (
 	"net/http"
 )
 
+// Returns a http.ServeMux with endpoints and methods to those endpoints
 func NewRouter() *http.ServeMux {
     router := http.NewServeMux()
 	router.HandleFunc("/hash", hash)

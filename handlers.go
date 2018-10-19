@@ -8,6 +8,9 @@ import (
 	"syscall"
 )
 
+// Endpoint method that expects the password field to be set.
+// If password field is set then EncodePassword is call to ecode and is set sent back.
+// Otherwise error message is sent if password field is not set or wrong request type is found.
 func hash(w http.ResponseWriter, r *http.Request) {
     switch r.Method {
     	case "POST":
@@ -33,6 +36,9 @@ func hash(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+// Endpoint method for gracefull shutdown of the server.
+// If request is correct method sends interupt signal to shutdown server.
+// Otherwise error message is sent if wrong request type is found.
 func shutdown(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
     	case "POST":
@@ -51,6 +57,8 @@ func shutdown(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+// Endpoint method that returns basic information about password hashes seen so far.
+// Error message is sent if wrong request type is found.
 func stats(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
     	case "GET":
@@ -68,14 +76,19 @@ func stats(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+// Endpoint method that handles any paths not supported.
+// Error message is sent with an approriate message.
 func catchAll(w http.ResponseWriter, r *http.Request) {
 	sendError(w, http.StatusBadRequest, "URL is not supported")
 }
 
+
+// Helper function to send errors
 func sendError(w http.ResponseWriter, code int, message string) {
 	sendJson(w, code, map[string]string{"error": message}, 5)
 }
 
+// Helper function to send json encoded message
 func sendJson(w http.ResponseWriter, code int, payload interface{}, sleeptime int) {
 	// Keep socket open for 5 seconds before sendng response
 	time.Sleep(time.Duration(sleeptime) * time.Second)
