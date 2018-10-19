@@ -48,7 +48,7 @@ Return Value
 ```
 
 Statistics
-Provides basic information about the password hashes seen so far such as total number of hashes and the average time to encode those hashes.
+Provides basic information about the password hashes seen so far such as total number of hashes and the average time to encode those hashes in microseconds.
 
 Example:
 ```
@@ -62,7 +62,7 @@ Return Value
 ```
 
 ## Running the tests
-Tests issue all the different requests supported.  The test all issue requests that should return an error.
+Tests issue all the different requests supported.  The tests all issue requests that should return an error.
 
 How to run tests:
 
