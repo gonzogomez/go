@@ -69,3 +69,6 @@ How to run tests:
 ```
 go test
 ```
+
+## Assumptions and Improvements
+All services return an encoded JSON reponse. Stats for the hashes is persistent even after shutting down the server.  Stats are stored in a JSON file.  This can be improved upon by writting to a database.  A database was not added because I felt that was out of the scope of this project.
